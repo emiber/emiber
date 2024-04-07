@@ -1,0 +1,28 @@
+.main {
+    width: 100vw;
+    height: 100vh;
+}
+
+$topBarHeigth : 3rem;
+$footerHeigth : 2rem;
+
+.topBar,
+.content,
+.footer {
+    padding: 0 2rem;
+}
+
+.topBar {
+    height: $topBarHeigth;
+}
+
+.content {
+    height: calc(100% - $topBarHeigth - $footerHeigth);
+    background-color: #ccc;
+    
+}
+
+.footer {
+    height: $footerHeigth;
+    background-color: beige;
+}
