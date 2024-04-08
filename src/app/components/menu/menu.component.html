@@ -1,6 +1,6 @@
 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu" (menuOpened)="open(true)"
-    (menuClosed)="open(false)">
-    <mat-icon>{{isOpen ? 'more_horizontal' : 'more_vert'}}</mat-icon>
+    (menuClosed)="open(false)" class="buttonMenu" [ngClass]="{open:isOpen}">
+    <mat-icon>more_horizontal</mat-icon>
 </button>
 <mat-menu #menu="matMenu">
     <a mat-menu-item routerLink="home">

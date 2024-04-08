@@ -1,0 +1,10 @@
+.buttonMenu {
+    transition: all 1s;
+    background-color: #ccc;
+}
+
+.open {
+    transform: rotate(-450deg);
+    color: #fff;
+    background-color: #000;
+}
