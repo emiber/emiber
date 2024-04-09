@@ -9,7 +9,7 @@
     </div>
     <div class="images">
         <ng-container *ngFor="let image of project.images; index as i">
-            <img [src]="image" [ngClass]="{selected: i === imageSelected}">
+            <img [src]="image" [ngClass]="{selected: i === imageSelected}" [alt]="project.name">
         </ng-container>
     </div>
     <div class="prevNext" (click)="prevNext(1)">
@@ -21,6 +21,7 @@
 
 <div class="paginator">
     <ng-container *ngFor="let image of project.images; index as i">
-        <button [ngClass]="{selected: i === imageSelected}" (click)="selectImage(i)"></button>
+        <button [ngClass]="{selected: i === imageSelected}" (click)="selectImage(i)" aria-label="Change image">show
+            image {{i}}</button>
     </ng-container>
 </div>
