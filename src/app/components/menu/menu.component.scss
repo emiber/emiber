@@ -1,10 +1,13 @@
+@import "../../styles/variables.scss";
+
 .buttonMenu {
     transition: all 1s;
-    background-color: #ccc;
+    color: $fontColor;
+    background-color: transparent;
 }
 
 .open {
     transform: rotate(-450deg);
-    color: #fff;
-    background-color: #000;
+    color: #000;
+    background-color: $fontColor;
 }

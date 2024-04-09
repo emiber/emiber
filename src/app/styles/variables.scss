@@ -7,3 +7,23 @@ $imageSelected: orangered;
 
 $contentBGColor: rgba(0, 0, 0, .5);
 $contentFontColor: #fff;
+
+
+.main {
+    .main {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+}
+
+p {
+    text-align: justify;
+    font-size: 1.1rem;
+    line-height: 160%;
+}
+
+a {
+    color: $fontColor;
+    text-decoration: none;
+    font-weight: bold;
+}

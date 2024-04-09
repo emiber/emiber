@@ -14,6 +14,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { ProjectComponent } from './views/projects/project/project.component';
 import { ProjectsComponent } from './views/projects/projects.component';
+import { LabsComponent } from './views/labs/labs.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ProjectsComponent } from './views/projects/projects.component';
     FooterComponent,
     MenuComponent,
     ProjectsComponent,
-    ProjectComponent
+    ProjectComponent,
+    LabsComponent
   ],
   imports: [
     BrowserModule,

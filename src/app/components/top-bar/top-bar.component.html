@@ -1,4 +1,8 @@
-<div class="main">
+<div class="mainTopBar">
     <h1>Emiliano Berestovoy</h1>
-    <app-menu></app-menu>
+    <div class="menuOption">
+        <mat-icon>{{selectedItem.icon}}</mat-icon>
+        <h1> {{selectedItem.text}} </h1>
+    </div>
+    <app-menu (itemSelected)="selectItem($event)"></app-menu>
 </div>

@@ -1,11 +1,27 @@
-.main {
+@import "../../styles/variables.scss";
+
+.mainTopBar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 100%;
+    color: #fff;
 }
 
 h1 {
     margin: 0;
-    color: #fff;
+}
+
+.menuOption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+        padding-left: .5rem;
+    }
+
+    mat-icon {
+        color: $fontColor;
+    }
 }
