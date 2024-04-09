@@ -3,12 +3,10 @@
     <mat-icon>more_horizontal</mat-icon>
 </button>
 <mat-menu #menu="matMenu">
-    <a mat-menu-item routerLink="home">
-        <mat-icon>home</mat-icon>
-        <span>Home</span>
-    </a>
-    <a mat-menu-item routerLink="contact">
-        <mat-icon>alternate_email</mat-icon>
-        <span>Contact</span>
-    </a>
+    <ng-container *ngFor="let item of menuItems">
+        <a mat-menu-item [routerLink]="item.link">
+            <mat-icon>{{item.icon}}</mat-icon>
+            <span>{{item.text}}</span>
+        </a>
+    </ng-container>
 </mat-menu>

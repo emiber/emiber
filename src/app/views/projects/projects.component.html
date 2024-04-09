@@ -1,0 +1,13 @@
+<h1>Projects</h1>
+
+<div class="projectSelector">
+    <ng-container *ngFor="let project of projects; index as i">
+        <button (click)="select(i)" class="projectSelector" [ngClass]="{selected: i === selected}">
+            {{project.name}}
+        </button>
+    </ng-container>
+</div>
+
+<ng-container *ngFor="let project of projects;  index as i">
+    <app-project *ngIf="i === selected" [project]="project"></app-project>
+</ng-container>

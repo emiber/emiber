@@ -1,0 +1,21 @@
+@import "../../styles/variables.scss";
+
+.projectSelector {
+    display: flex;
+    justify-content: center;
+
+    .projectSelector {
+        margin: 0 .5rem;
+        padding: .125rem .5rem;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 2px solid transparent;
+        background-color: transparent;
+        color: $fontColor;
+    }
+
+    .selected {
+        border-color: $fontColor;
+    }
+}

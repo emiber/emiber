@@ -1,0 +1,26 @@
+<h2>{{project.name}}</h2>
+<span>{{project.description}}</span>
+
+<div class="slider">
+    <div class="prevNext" (click)="prevNext(-1)">
+        <button mat-icon-button aria-label="Previous image" *ngIf="project.images.length > 1">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+    </div>
+    <div class="images">
+        <ng-container *ngFor="let image of project.images; index as i">
+            <img [src]="image" [ngClass]="{selected: i === imageSelected}">
+        </ng-container>
+    </div>
+    <div class="prevNext" (click)="prevNext(1)">
+        <button mat-icon-button aria-label="Next image" *ngIf="project.images.length > 1">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
+    </div>
+</div>
+
+<div class="paginator">
+    <ng-container *ngFor="let image of project.images; index as i">
+        <button [ngClass]="{selected: i === imageSelected}" (click)="selectImage(i)"></button>
+    </ng-container>
+</div>

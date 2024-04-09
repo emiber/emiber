@@ -1,0 +1,50 @@
+@import "../../../styles/variables.scss";
+
+.slider {
+    display: flex;
+    max-width: 1280px;
+    margin: 0 auto;
+
+    .prevNext {
+        width: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .images {
+        width: calc(100% - 8rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            width: 0;
+            transition: width .5s;
+
+            &.selected {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.paginator {
+    display: flex;
+    justify-content: center;
+    padding: .5rem;
+
+    button {
+        height: .25rem;
+        width: 1rem;
+        background-color: $imageNotSelected;
+        margin: .25rem;
+        border: none;
+        cursor: pointer;
+
+        &:hover,
+        &.selected {
+            background-color: $imageSelected;
+        }
+    }
+}
