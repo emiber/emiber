@@ -30,7 +30,6 @@ export class ProjectsComponent implements OnInit {
 
   select(index: number) {
     this.selected = index;
-    // this.route.snapshot.params['project'] = index;
     this.router.navigate(['/projects', this.getFancyURL(this.projects[index].name)]);
   }
 
