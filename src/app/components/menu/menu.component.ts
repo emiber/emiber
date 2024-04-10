@@ -19,7 +19,7 @@ export class MenuComponent {
     this.menuItems = new Array<IMenuOption>();
     this.menuItems.push({ link: 'home', icon: 'home', text: 'Home' });
     this.menuItems.push({ link: 'projects', icon: 'lightbulb', text: 'Projects' });
-    this.menuItems.push({ link: 'labs', icon: 'science', text: 'Labs' });
+    // this.menuItems.push({ link: 'labs', icon: 'science', text: 'Labs' });
     this.menuItems.push({ link: 'contact', icon: 'alternate_email', text: 'Contact' });
 
     this.select(this.menuItems[0]);

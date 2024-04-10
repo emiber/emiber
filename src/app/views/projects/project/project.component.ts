@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { IProject } from 'src/app/services/models';
 
 @Component({
@@ -8,9 +8,12 @@ import { IProject } from 'src/app/services/models';
 })
 export class ProjectComponent {
   @Input() project!: IProject;
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    this.prevNext(1);
+  }
 
   imageSelected: number = 0
-
 
   prevNext(index: number) {
     this.imageSelected = this.imageSelected + index;
