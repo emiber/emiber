@@ -11,6 +11,7 @@ import { IMenuOption } from 'src/app/services/models';
 export class MenuComponent {
   @Output() itemSelected: BehaviorSubject<IMenuOption> = new BehaviorSubject<IMenuOption>({} as IMenuOption);
   isOpen: boolean = false;
+  timedOutCloser: any;
 
   menuItems: IMenuOption[];
 
