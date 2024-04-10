@@ -15,7 +15,9 @@
         "description": "Casalinda",
         "url": "https://casalinda.com.ar/",
         "images": [
-            "casalinda_0.png"
+            "casalinda_0.png",
+            "casalinda_1.png",
+            "casalinda_2.png"
         ]
     },
     {
@@ -24,7 +26,8 @@
         "url": "https://auricularesvio.com/",
         "images": [
             "vio_0.png",
-            "vio_1.png"
+            "vio_1.png",
+            "vio_2.png"
         ]
     }
 ]

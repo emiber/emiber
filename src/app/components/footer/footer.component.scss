@@ -1,4 +1,6 @@
-.main {
+@import "../../styles/variables.scss";
+
+.mainFooter {
     width: 100%;
     height: 100%;
     display: flex;
@@ -12,4 +14,11 @@ a {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+
+svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0 .25rem;
+    color: $svgColor;
 }
