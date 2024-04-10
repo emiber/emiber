@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { IProject } from './models';
 
 @Injectable({
@@ -8,10 +8,14 @@ import { IProject } from './models';
 })
 export class ProjectsService {
   private url = '/assets/data/projects.json';
+  private projects!: IProject[];
 
   constructor(private http: HttpClient) { }
 
   get(): Observable<IProject[]> {
+    if (this.projects) {
+      return of(this.projects);
+    }
     return this.http.get<IProject[]>(this.url).pipe(
       map((res: IProject[]) => {
         res.forEach(prj => {
@@ -19,6 +23,7 @@ export class ProjectsService {
             prj.images[i] = "assets/images/projects/".concat(prj.images[i]);
           }
         });
+        this.projects = res;
         return (res);
       })
     );
