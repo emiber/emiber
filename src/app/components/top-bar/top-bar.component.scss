@@ -25,3 +25,11 @@ h1 {
         color: $fontColor;
     }
 }
+
+.logo {
+    svg {
+        height: 4rem;
+        width: auto;
+        color: yellow;
+    }
+}
