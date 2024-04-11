@@ -9,6 +9,7 @@ import { IProject } from 'src/app/services/models';
 export class ProjectComponent {
   @Input() project!: IProject;
   imageSelected: number = 0
+  showModal: boolean = false;
 
   prevNext(index: number) {
     this.imageSelected = this.imageSelected + index;
@@ -22,5 +23,9 @@ export class ProjectComponent {
 
   selectImage(index: number) {
     this.imageSelected = index;
+  }
+
+  showImage() {
+    // this.showModal = !this.showModal;
   }
 }

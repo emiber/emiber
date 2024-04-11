@@ -6,7 +6,7 @@
     </div>
     <div class="images">
         <ng-container *ngFor="let image of project.images; index as i">
-            <img [src]="image" [ngClass]="{selected: i === imageSelected}" [alt]="project.name">
+            <img [src]="image" [ngClass]="{selected: i === imageSelected}" [alt]="project.name" (click)="showImage()">
         </ng-container>
     </div>
     <div class="prevNext" (click)="prevNext(1)">
@@ -25,4 +25,8 @@
 
 <div class="link" *ngIf="project.url">Link: <a [href]="project.url" target="_blank">{{project.name}}</a></div>
 
-<div [innerHTML]="project.description"></div>
+<div class="projectDescription" [innerHTML]="project.description"></div>
+
+<div class="modal" (click)="showImage()" *ngIf="showModal">
+    <img [src]="project.images[imageSelected]" [alt]="project.name">
+</div>
