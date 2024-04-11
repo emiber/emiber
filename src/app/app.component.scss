@@ -26,9 +26,10 @@ $footerHeigth : 3rem;
     height: calc(100% - $topBarHeigth - $footerHeigth - $paddingTop - $paddingBottom);
     padding-top: $paddingTop;
     padding-bottom: $paddingBottom;
-    background-color: $contentBGColor;
     color: $contentFontColor;
     overflow: auto;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(180deg, rgba($color: $contentBGColor, $alpha: .7) 0%, rgba($color: $contentBGColor, $alpha: .3) 100%);
 }
 
 .footer {
