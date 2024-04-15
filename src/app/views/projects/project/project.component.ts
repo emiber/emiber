@@ -1,4 +1,6 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { GalleryComponent } from 'src/app/components/gallery/gallery.component';
 import { IProject } from 'src/app/services/models';
 
 @Component({
@@ -8,24 +10,4 @@ import { IProject } from 'src/app/services/models';
 })
 export class ProjectComponent {
   @Input() project!: IProject;
-  imageSelected: number = 0
-  showModal: boolean = false;
-
-  prevNext(index: number) {
-    this.imageSelected = this.imageSelected + index;
-
-    if (this.imageSelected === this.project.images.length) {
-      this.imageSelected = 0;
-    } else if (this.imageSelected < 0) {
-      this.imageSelected = this.project.images.length - 1;
-    }
-  }
-
-  selectImage(index: number) {
-    this.imageSelected = index;
-  }
-
-  showImage() {
-    // this.showModal = !this.showModal;
-  }
 }

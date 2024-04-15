@@ -1,32 +1,3 @@
-<div class="slider">
-    <div class="prevNext" (click)="prevNext(-1)">
-        <button mat-icon-button aria-label="Previous image" *ngIf="project.images.length > 1">
-            <mat-icon>chevron_left</mat-icon>
-        </button>
-    </div>
-    <div class="images">
-        <ng-container *ngFor="let image of project.images; index as i">
-            <img [src]="image" [ngClass]="{selected: i === imageSelected}" [alt]="project.name" (click)="showImage()">
-        </ng-container>
-    </div>
-    <div class="prevNext" (click)="prevNext(1)">
-        <button mat-icon-button aria-label="Next image" *ngIf="project.images.length > 1">
-            <mat-icon>chevron_right</mat-icon>
-        </button>
-    </div>
-</div>
-
-<div class="paginator">
-    <ng-container *ngFor="let image of project.images; index as i">
-        <button [ngClass]="{selected: i === imageSelected}" (click)="selectImage(i)" aria-label="Change image">show
-            image {{i}}</button>
-    </ng-container>
-</div>
-
+<app-gallery [images]="project.images" [imageSelected]="0"></app-gallery>
 <div class="link" *ngIf="project.url">Link: <a [href]="project.url" target="_blank">{{project.name}}</a></div>
-
 <div class="projectDescription" [innerHTML]="project.description"></div>
-
-<div class="modal" (click)="showImage()" *ngIf="showModal">
-    <img [src]="project.images[imageSelected]" [alt]="project.name">
-</div>

@@ -1,55 +1,5 @@
 @import "../../../styles/variables.scss";
 
-.slider {
-    display: flex;
-    width: calc(min(100%, 1280px));
-    margin: 0 auto;
-
-    .prevNext {
-        width: 4rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .images {
-        width: calc(100% - 8rem);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        img {
-            width: 0;
-            transition: width .5s;
-
-            &.selected {
-                width: 100%;
-            }
-        }
-    }
-}
-
-.paginator {
-    display: flex;
-    justify-content: center;
-    padding: .5rem;
-
-    button {
-        height: .25rem;
-        width: 1rem;
-        background-color: $imageNotSelected;
-        margin: .25rem;
-        border: none;
-        cursor: pointer;
-        font-size: 0;
-
-        &:hover,
-        &.selected {
-            background-color: $imageSelected;
-        }
-    }
-}
-
 .link {
     padding: .5rem 0;
     width: 80%;
@@ -62,19 +12,4 @@
     line-height: 160%;
     width: 80%;
     margin: 0 auto;
-}
-
-.modal {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    img {
-        width: 80%;
-    }
 }
