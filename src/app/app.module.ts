@@ -10,6 +10,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { GalleryDialogComponent } from './components/gallery-dialog/gallery-dialog.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
@@ -27,7 +28,8 @@ import { ProjectsComponent } from './views/projects/projects.component';
     ProjectsComponent,
     ProjectComponent,
     LabsComponent,
-    GalleryComponent
+    GalleryComponent,
+    GalleryDialogComponent
   ],
   imports: [
     BrowserModule,

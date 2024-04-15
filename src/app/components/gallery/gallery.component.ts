@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { GalleryDialogComponent } from '../gallery-dialog/gallery-dialog.component';
 
 @Component({
   selector: 'app-gallery',
@@ -10,12 +11,9 @@ import { MatDialog } from '@angular/material/dialog';
 export class GalleryComponent {
   @Input() images!: string[];
   @Input() imageSelected: number = 0;
+  @Input() showModal: boolean = true;
 
-  constructor(public dialog: MatDialog) {
-    // console.log('hola');
-    // this.project = this.data.project;
-    // this.imageSelected = this.data.imageSelected;
-  }
+  constructor(public dialog: MatDialog) { }
 
   prevNext(index: number) {
     this.imageSelected = this.imageSelected + index;
@@ -32,10 +30,8 @@ export class GalleryComponent {
   }
 
   showImage() {
-    // console.log(this.data);
-    const dialogRef = this.dialog.open(GalleryComponent);
-    // this.showModal = !this.showModal;
+    if (this.showModal) {
+      const dialogRef = this.dialog.open(GalleryDialogComponent, { data: { images: this.images, imageSelected: this.imageSelected } });
+    }
   }
-
-
 }
