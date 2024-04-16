@@ -34,4 +34,8 @@ export class GalleryComponent {
       const dialogRef = this.dialog.open(GalleryDialogComponent, { data: { images: this.images, imageSelected: this.imageSelected } });
     }
   }
+
+  drop($event: any) {
+    this.prevNext($event.distance.x > 0 ? 1 : -1);
+  }
 }
