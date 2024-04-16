@@ -22,6 +22,8 @@ $transitionDuration: .5s;
         img {
             width: 0;
             transition: width $transitionDuration;
+            max-width: 100%;
+            max-height: 100%;
 
             &.selected {
                 width: 100%;
