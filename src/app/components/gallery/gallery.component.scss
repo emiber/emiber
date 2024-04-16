@@ -1,5 +1,7 @@
 @import "../../styles/variables.scss";
 
+$transitionDuration: .5s;
+
 .slider {
     display: flex;
     margin: 0 auto;
@@ -19,7 +21,7 @@
 
         img {
             width: 0;
-            transition: width .5s;
+            transition: width $transitionDuration;
 
             &.selected {
                 width: 100%;
@@ -41,6 +43,8 @@
         border: none;
         cursor: pointer;
         font-size: 0;
+        border-radius: 1rem;
+        transition: background-color $transitionDuration;
 
         &:hover,
         &.selected {
