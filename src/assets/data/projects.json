@@ -3,11 +3,11 @@
         "name": "Admin Panel",
         "description": "Admin Panel",
         "images": [
-            "panel_0.png",
-            "panel_1.png",
-            "panel_2.png",
-            "panel_3.png",
-            "panel_4.png"
+            "panel_0.webp",
+            "panel_1.webp",
+            "panel_2.webp",
+            "panel_3.webp",
+            "panel_4.webp"
         ]
     },
     {
@@ -15,9 +15,9 @@
         "description": "Casalinda",
         "url": "https://casalinda.com.ar/",
         "images": [
-            "casalinda_0.png",
-            "casalinda_1.png",
-            "casalinda_2.png"
+            "casalinda_0.webp",
+            "casalinda_1.webp",
+            "casalinda_2.webp"
         ]
     },
     {
@@ -25,9 +25,9 @@
         "description": "Auriculares Vio",
         "url": "https://auricularesvio.com/",
         "images": [
-            "vio_0.png",
-            "vio_1.png",
-            "vio_2.png"
+            "vio_0.webp",
+            "vio_1.webp",
+            "vio_2.webp"
         ]
     },
     {
@@ -35,9 +35,9 @@
         "description": "JGAgendasApp is an online appointment management solution that allows businesses, professionals, and centers to easily and quickly optimize their scheduling of appointments.<br><br>Some of its main features are:<br>For Businesses/Professionals:<br>- Registration of the business/profession on the platform<br>- Configuration of profile with relevant information<br>- Definition of schedules, professional staff, and administrative support<br>- Direct management of the appointment calendar without intermediaries<br>- Full control over appointment scheduling<br><br>For Users/Clients:<br>- Registration on the platform<br>- Selection of day and time to book an appointment<br>- Receipt of appointment reminders via email<br><br>The platform is designed to adapt to various industries such as health, beauty, sports, legal services, education, auto repair shops, etc. It offers a free 60-day trial with all features enabled.<br><br>JGAgendasApp promises to save money by allowing businesses to achieve the same results as appointment booking agencies, as well as ensuring up to 40% attendance at appointments by sending automated reminders to clients.<br><br>Some key benefits highlighted are being online 24/7, personalized schedules, and automated reminders to prevent missed appointments.<br>",
         "url": "https://jgagendas.com/",
         "images": [
-            "jg_1.png",
-            "jg_2.png",
-            "jg_3.png"
+            "jg_1.webp",
+            "jg_2.webp",
+            "jg_3.webp"
         ]
     }
 ]
