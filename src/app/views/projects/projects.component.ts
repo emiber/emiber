@@ -14,6 +14,7 @@ export class ProjectsComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
+    event.preventDefault();
     switch (event.key) {
       case 'ArrowUp':
         this.selected++;
