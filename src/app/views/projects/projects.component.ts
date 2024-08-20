@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IProject } from 'src/app/services/models';
 import { ProjectsService } from 'src/app/services/projects.service';
@@ -11,6 +11,24 @@ import { ProjectsService } from 'src/app/services/projects.service';
 export class ProjectsComponent implements OnInit {
   projects!: IProject[];
   selected: number = 0;
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'ArrowUp':
+        this.selected++;
+        break;
+      case 'ArrowDown':
+        this.selected--;
+        break;
+    }
+
+    if (this.selected === this.projects.length) {
+      this.selected = 0;
+    } else if (this.selected < 0) {
+      this.selected = this.projects.length - 1;
+    }
+  }
 
   constructor(private projectService: ProjectsService, private route: ActivatedRoute, private router: Router) { }
 

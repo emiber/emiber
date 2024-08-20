@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { GalleryDialogComponent } from '../gallery-dialog/gallery-dialog.component';
 
@@ -12,6 +12,24 @@ export class GalleryComponent {
   @Input() images!: string[];
   @Input() imageSelected: number = 0;
   @Input() showModal: boolean = true;
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'ArrowRight':
+        this.imageSelected++;
+        break;
+      case 'ArrowLeft':
+        this.imageSelected--;
+        break;
+    }
+
+    if (this.imageSelected === this.images.length) {
+      this.imageSelected = 0;
+    } else if (this.imageSelected < 0) {
+      this.imageSelected = this.images.length - 1;
+    }
+  }
 
   constructor(public dialog: MatDialog) { }
 
