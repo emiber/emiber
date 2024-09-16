@@ -27,9 +27,12 @@ h1 {
 }
 
 .logo {
-    svg {
+
+    svg,
+    img {
         height: 4rem;
         width: auto;
         color: $logoColor;
+        border-radius: 1rem;
     }
 }
