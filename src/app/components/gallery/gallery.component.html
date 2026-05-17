@@ -19,7 +19,6 @@
 
 <div class="paginator">
     <ng-container *ngFor="let image of images; index as i">
-        <button [ngClass]="{selected: i === imageSelected}" (click)="selectImage(i)" aria-label="Change image">show
-            image {{i}}</button>
+        <button [ngClass]="{selected: i === imageSelected}" (click)="selectImage(i)" [attr.aria-label]="'Image ' + (i + 1)"></button>
     </ng-container>
 </div>

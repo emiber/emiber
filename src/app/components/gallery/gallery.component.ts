@@ -1,9 +1,11 @@
 import { Component, HostListener, Input } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { GalleryDialogComponent } from '../gallery-dialog/gallery-dialog.component';
 
 @Component({
   selector: 'app-gallery',
+  standalone: false,
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.scss'
 })
@@ -49,11 +51,11 @@ export class GalleryComponent {
 
   showImage() {
     if (this.showModal) {
-      const dialogRef = this.dialog.open(GalleryDialogComponent, { data: { images: this.images, imageSelected: this.imageSelected } });
+      this.dialog.open(GalleryDialogComponent, { data: { images: this.images, imageSelected: this.imageSelected } });
     }
   }
 
-  drop($event: any) {
-    this.prevNext($event.distance.x > 0 ? 1 : -1);
+  drop(event: CdkDragDrop<string[]>) {
+    this.prevNext(event.distance.x > 0 ? -1 : 1);
   }
 }

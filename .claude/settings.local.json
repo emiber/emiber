@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\repositories\\\\emiber\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "Bash(npx ng *)",
+      "Bash(Get-Content \"C:\\\\Users\\\\EMILIA~1.BER\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--repositories-emiber\\\\dec9d244-17aa-4ca7-9e2f-983b2ee48a44\\\\tasks\\\\bnnosmpmr.output\" -Wait -Tail 30)",
+      "Bash(Select-String -Pattern \"error|Error|warning|Warning|successfully|Application bundle|TS\")",
+      "Bash(Select-Object -First 20)",
+      "Bash(npx tsc *)",
+      "Bash(npm show *)",
+      "Bash(python3 -c \"import sys,json; vs=[v for v in json.load\\(sys.stdin\\) if v.startswith\\('5.9'\\) or v.startswith\\('5.10'\\) or v.startswith\\('6.0'\\)]; print\\('\\\\n'.join\\(vs[-10:]\\)\\)\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}

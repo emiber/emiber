@@ -1,17 +1,18 @@
 import { Component, Output } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IMenuOption } from 'src/app/services/models';
 
 @Component({
   selector: 'app-menu',
+  standalone: false,
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
 export class MenuComponent {
   @Output() itemSelected: BehaviorSubject<IMenuOption> = new BehaviorSubject<IMenuOption>({} as IMenuOption);
   isOpen: boolean = false;
-  timedOutCloser: any;
 
   menuItems: IMenuOption[];
 
@@ -25,7 +26,7 @@ export class MenuComponent {
 
     this.select(this.menuItems[0]);
 
-    this.router.events.subscribe(event => {
+    this.router.events.pipe(takeUntilDestroyed()).subscribe(event => {
       if (event instanceof NavigationEnd && event!.url!.split('/') && event!.url!.split('/')[1]) {
         segmentSelected = event.url.split('/')[1];
 

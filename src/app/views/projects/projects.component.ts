@@ -5,6 +5,7 @@ import { ProjectsService } from 'src/app/services/projects.service';
 
 @Component({
   selector: 'app-projects',
+  standalone: false,
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
@@ -14,13 +15,14 @@ export class ProjectsComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    event.preventDefault();
     switch (event.key) {
       case 'ArrowUp':
-        this.selected++;
+        event.preventDefault();
+        this.selected--;
         break;
       case 'ArrowDown':
-        this.selected--;
+        event.preventDefault();
+        this.selected++;
         break;
     }
 
