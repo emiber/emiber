@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChatService } from 'src/app/services/chat.service';
 
@@ -27,15 +27,20 @@ export class ChatComponent {
   currentMessage = '';
   isLoading = false;
 
-  constructor(private chatService: ChatService) {}
+  constructor(
+    private chatService: ChatService,
+    private cdr: ChangeDetectorRef,
+    private zone: NgZone
+  ) {}
 
   send(): void {
     const msg = this.currentMessage.trim();
     if (!msg || this.isLoading) return;
 
-    this.messages.push({ role: 'user', content: msg });
+    this.messages = [...this.messages, { role: 'user', content: msg }];
     this.currentMessage = '';
     this.isLoading = true;
+    this.cdr.detectChanges();
     this.scrollToBottom();
 
     const history = this.messages
@@ -44,17 +49,23 @@ export class ChatComponent {
 
     this.chatService.sendMessage(msg, history).subscribe({
       next: reply => {
-        this.messages.push({ role: 'assistant', content: reply });
-        this.isLoading = false;
-        this.scrollToBottom();
+        this.zone.run(() => {
+          this.messages = [...this.messages, { role: 'assistant', content: reply }];
+          this.isLoading = false;
+          this.cdr.detectChanges();
+          this.scrollToBottom();
+        });
       },
       error: () => {
-        this.messages.push({
-          role: 'assistant',
-          content: 'Sorry, I encountered an error. Please try again later.',
+        this.zone.run(() => {
+          this.messages = [
+            ...this.messages,
+            { role: 'assistant', content: 'Sorry, I encountered an error. Please try again later.' },
+          ];
+          this.isLoading = false;
+          this.cdr.detectChanges();
+          this.scrollToBottom();
         });
-        this.isLoading = false;
-        this.scrollToBottom();
       },
     });
   }
