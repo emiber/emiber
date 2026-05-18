@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { IProject } from 'src/app/services/models';
 
 import { ProjectComponent } from './project.component';
@@ -10,7 +9,7 @@ describe('ProjectComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProjectComponent, NoopAnimationsModule]
+      imports: [ProjectComponent]
     })
       .compileComponents();
 

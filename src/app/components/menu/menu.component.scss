@@ -1,13 +1,55 @@
 @use "../../styles/variables.scss" as *;
 
+.menuHost {
+    position: relative;
+}
+
 .buttonMenu {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    border-radius: 50%;
     transition: all 1s;
     color: $fontColor;
     background-color: transparent;
+    cursor: pointer;
+
+    .material-icons {
+        line-height: 1;
+    }
 }
 
 .open {
     transform: rotate(-450deg);
     color: #000;
     background-color: $fontColor;
+}
+
+.menuPanel {
+    position: absolute;
+    top: calc(100% + .5rem);
+    right: 0;
+    min-width: 11rem;
+    padding: .35rem 0;
+    border: 1px solid rgba($color: $fontColor, $alpha: .45);
+    border-radius: .25rem;
+    background-color: rgba($color: #000, $alpha: .92);
+    box-shadow: 0 .5rem 1rem rgba($color: #000, $alpha: .45);
+    z-index: 10;
+}
+
+.menuItem {
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    padding: .7rem 1rem;
+    color: #fff;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+        color: #000;
+        background-color: $fontColor;
+        outline: none;
+    }
 }

@@ -1,12 +1,14 @@
-<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu" (menuOpened)="open(true)"
-    (menuClosed)="open(false)" class="buttonMenu" [ngClass]="{open:isOpen}">
-    <mat-icon>more_horizontal</mat-icon>
-</button>
-<mat-menu #menu="matMenu">
-    <ng-container *ngFor="let item of menuItems">
-        <a mat-menu-item [routerLink]="item.link" (click)="select(item)">
-            <mat-icon>{{item.icon}}</mat-icon>
+<div class="menuHost">
+    <button type="button" aria-label="Menu" aria-haspopup="menu" [attr.aria-expanded]="isOpen" class="buttonMenu"
+        [ngClass]="{open:isOpen}" (click)="toggle($event)">
+        <span class="material-icons" aria-hidden="true">more_horizontal</span>
+    </button>
+
+    <nav class="menuPanel" role="menu" *ngIf="isOpen">
+        <a class="menuItem" role="menuitem" *ngFor="let item of menuItems" [routerLink]="item.link"
+            (click)="select(item)">
+            <span class="material-icons" aria-hidden="true">{{item.icon}}</span>
             <span>{{item.text}}</span>
         </a>
-    </ng-container>
-</mat-menu>
+    </nav>
+</div>

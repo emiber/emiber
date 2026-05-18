@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TopBarComponent } from './top-bar.component';
 
@@ -10,7 +9,7 @@ describe('TopBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TopBarComponent, NoopAnimationsModule],
+      imports: [TopBarComponent],
       providers: [provideRouter([])]
     })
       .compileComponents();

@@ -1,24 +1,39 @@
-<div class="slider">
-    <div class="prevNext" (click)="prevNext(-1)">
-        <button mat-icon-button aria-label="Previous image" *ngIf="images.length > 1">
-            <mat-icon>chevron_left</mat-icon>
+<ng-template #gallery let-modal="modal">
+    <div class="slider" [ngClass]="{modalSlider: modal}">
+        <button type="button" class="prevNext iconButton" aria-label="Previous image" *ngIf="images.length > 1"
+            (click)="prevNext(-1)">
+            <span class="material-icons" aria-hidden="true">chevron_left</span>
+        </button>
+
+        <div class="images" cdkDropList (cdkDropListDropped)="drop($event)">
+            <ng-container *ngFor="let image of images; index as i">
+                <img [src]="image" [ngClass]="{selected: i === imageSelected, openable: showModal && !modal}"
+                    alt="Project image" (click)="onImageClick(modal)" cdkDragLockAxis="x" cdkDrag>
+            </ng-container>
+        </div>
+
+        <button type="button" class="prevNext iconButton" aria-label="Next image" *ngIf="images.length > 1"
+            (click)="prevNext(1)">
+            <span class="material-icons" aria-hidden="true">chevron_right</span>
         </button>
     </div>
-    <div class="images" cdkDropList (cdkDropListDropped)="drop($event)">
+
+    <div class="paginator">
         <ng-container *ngFor="let image of images; index as i">
-            <img [src]="image" [ngClass]="{selected: i === imageSelected}" alt="Project image" (click)="showImage()"
-                cdkDragLockAxis="x" cdkDrag>
+            <button type="button" [ngClass]="{selected: i === imageSelected}" (click)="selectImage(i)"
+                [attr.aria-label]="'Image ' + (i + 1)"></button>
         </ng-container>
     </div>
-    <div class="prevNext" (click)="prevNext(1)">
-        <button mat-icon-button aria-label="Next image" *ngIf="images.length > 1">
-            <mat-icon>chevron_right</mat-icon>
-        </button>
-    </div>
-</div>
+</ng-template>
 
-<div class="paginator">
-    <ng-container *ngFor="let image of images; index as i">
-        <button [ngClass]="{selected: i === imageSelected}" (click)="selectImage(i)" [attr.aria-label]="'Image ' + (i + 1)"></button>
-    </ng-container>
+<ng-container *ngTemplateOutlet="gallery; context: { modal: false }"></ng-container>
+
+<div class="dialogBackdrop" *ngIf="showModal && isModalOpen" (click)="hideImage()" role="dialog" aria-modal="true"
+    aria-label="Project image gallery">
+    <button type="button" class="closeButton iconButton" aria-label="Close gallery" (click)="hideImage()">
+        <span class="material-icons" aria-hidden="true">close</span>
+    </button>
+    <div class="dialogContent" (click)="$event.stopPropagation()">
+        <ng-container *ngTemplateOutlet="gallery; context: { modal: true }"></ng-container>
+    </div>
 </div>

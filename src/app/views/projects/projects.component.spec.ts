@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { provideRouter } from '@angular/router';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { IProject } from 'src/app/services/models';
 import { ProjectsService } from 'src/app/services/projects.service';
@@ -18,7 +17,7 @@ describe('ProjectsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProjectsComponent, NoopAnimationsModule],
+      imports: [ProjectsComponent],
       providers: [
         provideRouter([]),
         { provide: ProjectsService, useValue: { get: () => of(projects) } },

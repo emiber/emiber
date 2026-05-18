@@ -11,6 +11,10 @@ $transitionDuration: .5s;
         display: flex;
         align-items: center;
         justify-content: center;
+        border: none;
+        color: $fontColor;
+        background-color: transparent;
+        cursor: pointer;
     }
 
     .images {
@@ -28,8 +32,66 @@ $transitionDuration: .5s;
             &.selected {
                 width: 100%;
             }
+
+            &.openable {
+                cursor: zoom-in;
+            }
         }
     }
+}
+
+.iconButton {
+    border-radius: 50%;
+
+    .material-icons {
+        line-height: 1;
+    }
+
+    &:hover,
+    &:focus {
+        color: #000;
+        background-color: $fontColor;
+        outline: none;
+    }
+}
+
+.modalSlider {
+    width: min(90vw, 1100px);
+
+    .images {
+        max-height: 80vh;
+
+        img.selected {
+            object-fit: contain;
+        }
+    }
+}
+
+.dialogBackdrop {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: rgba($color: #000, $alpha: .86);
+    z-index: 100;
+}
+
+.dialogContent {
+    max-width: 100%;
+}
+
+.closeButton {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    color: $fontColor;
+    background-color: rgba($color: #000, $alpha: .65);
+    cursor: pointer;
 }
 
 .paginator {

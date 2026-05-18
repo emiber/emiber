@@ -24,7 +24,7 @@
     </div>
     <!-- <h1>Emiliano Berestovoy</h1> -->
     <div class="menuOption">
-        <mat-icon>{{selectedItem.icon}}</mat-icon>
+        <span class="material-icons menuIcon" aria-hidden="true">{{selectedItem.icon}}</span>
         <h1> {{selectedItem.text}} </h1>
     </div>
     <app-menu (itemSelected)="selectItem($event)"></app-menu>

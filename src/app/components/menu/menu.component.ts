@@ -1,16 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { IMenuOption } from 'src/app/services/models';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatButtonModule, MatIconModule, MatMenuModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })
@@ -25,7 +22,7 @@ export class MenuComponent implements OnInit {
     { link: 'contact', icon: 'alternate_email', text: 'Contact' },
   ];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private elementRef: ElementRef<HTMLElement>) {
     this.router.events.pipe(takeUntilDestroyed()).subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.selectByUrl(event.urlAfterRedirects);
@@ -37,12 +34,30 @@ export class MenuComponent implements OnInit {
     this.selectByUrl(this.router.url);
   }
 
-  open(isOpen: boolean) {
-    this.isOpen = isOpen;
+  @HostListener('document:click', ['$event'])
+  handleDocumentClick(event: MouseEvent): void {
+    if (this.isOpen && !this.elementRef.nativeElement.contains(event.target as Node)) {
+      this.close();
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  handleEscape(): void {
+    this.close();
+  }
+
+  toggle(event: MouseEvent) {
+    event.stopPropagation();
+    this.isOpen = !this.isOpen;
+  }
+
+  close(): void {
+    this.isOpen = false;
   }
 
   select(item: IMenuOption) {
     this.itemSelected.emit(item);
+    this.close();
   }
 
   private selectByUrl(url: string): void {
