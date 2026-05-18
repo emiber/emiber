@@ -1,11 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { IMenuOption } from 'src/app/services/models';
 
 @Component({
   selector: 'app-menu',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, RouterLink, MatButtonModule, MatIconModule, MatMenuModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss'
 })

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-labs',
-  standalone: false,
+  standalone: true,
   templateUrl: './labs.component.html',
   styleUrl: './labs.component.scss'
 })

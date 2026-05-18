@@ -1,9 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { GalleryComponent } from '../gallery/gallery.component';
 
 @Component({
   selector: 'app-gallery-dialog',
-  standalone: false,
+  standalone: true,
+  imports: [GalleryComponent],
   templateUrl: './gallery-dialog.component.html',
   styleUrl: './gallery-dialog.component.scss'
 })

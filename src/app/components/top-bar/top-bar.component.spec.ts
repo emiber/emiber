@@ -1,18 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
-import { IMenuOption } from 'src/app/services/models';
+import { provideRouter } from '@angular/router';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TopBarComponent } from './top-bar.component';
-
-@Component({
-  selector: 'app-menu',
-  standalone: false,
-  template: ''
-})
-class MenuStubComponent {
-  @Output() itemSelected = new EventEmitter<IMenuOption>();
-}
 
 describe('TopBarComponent', () => {
   let component: TopBarComponent;
@@ -20,8 +10,8 @@ describe('TopBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TopBarComponent, MenuStubComponent],
-      imports: [MatIconModule]
+      imports: [TopBarComponent, NoopAnimationsModule],
+      providers: [provideRouter([])]
     })
       .compileComponents();
 

@@ -1,11 +1,16 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
 import { Component, HostListener, Input } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { GalleryDialogComponent } from '../gallery-dialog/gallery-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-gallery',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, DragDropModule, MatButtonModule, MatDialogModule, MatIconModule],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.scss'
 })
@@ -46,8 +51,9 @@ export class GalleryComponent {
     this.imageSelected = index;
   }
 
-  showImage() {
+  async showImage(): Promise<void> {
     if (this.showModal && this.images.length) {
+      const { GalleryDialogComponent } = await import('../gallery-dialog/gallery-dialog.component');
       this.dialog.open(GalleryDialogComponent, { data: { images: this.images, imageSelected: this.imageSelected } });
     }
   }

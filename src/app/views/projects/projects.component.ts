@@ -1,13 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, HostListener, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IProject } from 'src/app/services/models';
 import { ProjectsService } from 'src/app/services/projects.service';
+import { ProjectComponent } from './project/project.component';
 
 @Component({
   selector: 'app-projects',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, ProjectComponent],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
