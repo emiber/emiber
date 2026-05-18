@@ -1,0 +1,11 @@
+{
+  "buildCommand": "ng build --configuration production",
+  "devCommand": "ng serve",
+  "outputDirectory": "dist/emiber",
+  "rewrites": [
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

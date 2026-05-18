@@ -20,6 +20,7 @@ export class MenuComponent implements OnInit {
     { link: 'projects', icon: 'lightbulb', text: 'Projects' },
     // { link: 'labs', icon: 'science', text: 'Labs' },
     { link: 'contact', icon: 'alternate_email', text: 'Contact' },
+    { link: 'chat', icon: 'smart_toy', text: 'Chat' },
   ];
 
   constructor(private router: Router, private elementRef: ElementRef<HTMLElement>) {

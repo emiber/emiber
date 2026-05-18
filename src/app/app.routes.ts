@@ -22,5 +22,9 @@ export const routes: Routes = [
     path: 'projects/:project',
     loadComponent: () => import('./views/projects/projects.component').then(m => m.ProjectsComponent)
   },
+  {
+    path: 'chat',
+    loadComponent: () => import('./views/chat/chat.component').then(m => m.ChatComponent)
+  },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
 ];
