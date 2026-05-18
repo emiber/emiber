@@ -8,7 +8,7 @@ import { IMenuOption } from 'src/app/services/models';
   styleUrl: './top-bar.component.scss'
 })
 export class TopBarComponent {
-  selectedItem!: IMenuOption;
+  selectedItem: IMenuOption = { link: 'home', icon: 'home', text: 'Home' };
 
   selectItem(item: IMenuOption) {
     this.selectedItem = item;

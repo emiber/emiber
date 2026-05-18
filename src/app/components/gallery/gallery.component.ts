@@ -11,38 +11,35 @@ import { GalleryDialogComponent } from '../gallery-dialog/gallery-dialog.compone
 })
 
 export class GalleryComponent {
-  @Input() images!: string[];
+  @Input() images: string[] = [];
   @Input() imageSelected: number = 0;
   @Input() showModal: boolean = true;
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    switch (event.key) {
-      case 'ArrowRight':
-        this.imageSelected++;
-        break;
-      case 'ArrowLeft':
-        this.imageSelected--;
-        break;
+    if (!this.canHandleKeyboard(event.key)) {
+      return;
     }
 
-    if (this.imageSelected === this.images.length) {
-      this.imageSelected = 0;
-    } else if (this.imageSelected < 0) {
-      this.imageSelected = this.images.length - 1;
+    event.preventDefault();
+    switch (event.key) {
+      case 'ArrowRight':
+        this.prevNext(1);
+        break;
+      case 'ArrowLeft':
+        this.prevNext(-1);
+        break;
     }
   }
 
   constructor(public dialog: MatDialog) { }
 
   prevNext(index: number) {
-    this.imageSelected = this.imageSelected + index;
-
-    if (this.imageSelected === this.images.length) {
-      this.imageSelected = 0;
-    } else if (this.imageSelected < 0) {
-      this.imageSelected = this.images.length - 1;
+    if (!this.images.length) {
+      return;
     }
+
+    this.imageSelected = (this.imageSelected + index + this.images.length) % this.images.length;
   }
 
   selectImage(index: number) {
@@ -50,12 +47,22 @@ export class GalleryComponent {
   }
 
   showImage() {
-    if (this.showModal) {
+    if (this.showModal && this.images.length) {
       this.dialog.open(GalleryDialogComponent, { data: { images: this.images, imageSelected: this.imageSelected } });
     }
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    if (event.distance.x === 0) {
+      return;
+    }
+
     this.prevNext(event.distance.x > 0 ? -1 : 1);
+  }
+
+  private canHandleKeyboard(key: string): boolean {
+    const isImageKey = key === 'ArrowRight' || key === 'ArrowLeft';
+    const parentDialogIsOpen = this.showModal && this.dialog.openDialogs.length > 0;
+    return isImageKey && this.images.length > 1 && !parentDialogIsOpen;
   }
 }

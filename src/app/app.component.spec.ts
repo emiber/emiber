@@ -1,11 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { AppModule } from './app.module';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
-    declarations: [AppComponent]
+    imports: [AppModule]
   }));
 
   it('should create the app', () => {
@@ -20,10 +19,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('emiber');
   });
 
-  it('should render title', () => {
+  it('should render the application shell', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('emiber app is running!');
+    expect(compiled.querySelector('.mainAppComponent')).toBeTruthy();
   });
 });
