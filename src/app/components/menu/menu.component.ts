@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { IMenuOption } from 'src/app/services/models';
@@ -9,7 +16,7 @@ import { IMenuOption } from 'src/app/services/models';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.scss'
+  styleUrl: './menu.component.scss',
 })
 export class MenuComponent implements OnInit {
   @Output() itemSelected = new EventEmitter<IMenuOption>();
@@ -19,12 +26,15 @@ export class MenuComponent implements OnInit {
     { link: 'home', icon: 'home', text: 'Home' },
     { link: 'projects', icon: 'lightbulb', text: 'Projects' },
     // { link: 'labs', icon: 'science', text: 'Labs' },
-    { link: 'contact', icon: 'alternate_email', text: 'Contact' },
     { link: 'chat', icon: 'smart_toy', text: 'Chat' },
+    { link: 'contact', icon: 'alternate_email', text: 'Contact' },
   ];
 
-  constructor(private router: Router, private elementRef: ElementRef<HTMLElement>) {
-    this.router.events.pipe(takeUntilDestroyed()).subscribe(event => {
+  constructor(
+    private router: Router,
+    private elementRef: ElementRef<HTMLElement>,
+  ) {
+    this.router.events.pipe(takeUntilDestroyed()).subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.selectByUrl(event.urlAfterRedirects);
       }
@@ -37,7 +47,10 @@ export class MenuComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   handleDocumentClick(event: MouseEvent): void {
-    if (this.isOpen && !this.elementRef.nativeElement.contains(event.target as Node)) {
+    if (
+      this.isOpen &&
+      !this.elementRef.nativeElement.contains(event.target as Node)
+    ) {
       this.close();
     }
   }
@@ -63,7 +76,7 @@ export class MenuComponent implements OnInit {
 
   private selectByUrl(url: string): void {
     const segmentSelected = url.split('?')[0].split('/')[1] || 'home';
-    const item = this.menuItems.find(el => el.link === segmentSelected);
+    const item = this.menuItems.find((el) => el.link === segmentSelected);
     if (item) {
       this.select(item);
     }
