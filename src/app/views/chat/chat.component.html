@@ -20,7 +20,7 @@
   </div>
 
   <div class="input-area">
-    <input class="input-field" type="text" [(ngModel)]="currentMessage" (keydown.enter)="send()"
+    <input #chatInput class="input-field" type="text" [(ngModel)]="currentMessage" (keydown.enter)="send()"
       placeholder="Ask me anything..." [disabled]="isLoading" aria-label="Chat input" />
     <button class="send-button" (click)="send()" [disabled]="isLoading || !currentMessage.trim()"
       aria-label="Send message">
