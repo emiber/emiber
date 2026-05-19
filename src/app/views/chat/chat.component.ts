@@ -1,11 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ChatService } from 'src/app/services/chat.service';
-
-interface Message {
-  role: 'user' | 'assistant';
-  content: string;
-}
+import { ChatMessage, ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -17,12 +12,7 @@ interface Message {
 export class ChatComponent {
   @ViewChild('scrollAnchor') private scrollAnchor!: ElementRef<HTMLElement>;
 
-  messages: Message[] = [
-    {
-      role: 'assistant',
-      content: "Hi! I'm an AI assistant with knowledge about Emiliano's portfolio. Ask me anything about his experience, skills, or projects!",
-    },
-  ];
+  messages: ChatMessage[] = [];
 
   currentMessage = '';
   isLoading = false;
@@ -31,13 +21,15 @@ export class ChatComponent {
     private chatService: ChatService,
     private cdr: ChangeDetectorRef,
     private zone: NgZone
-  ) {}
+  ) {
+    this.messages = this.chatService.getMessages();
+  }
 
   send(): void {
     const msg = this.currentMessage.trim();
     if (!msg || this.isLoading) return;
 
-    this.messages = [...this.messages, { role: 'user', content: msg }];
+    this.persistMessages([...this.messages, { role: 'user', content: msg }]);
     this.currentMessage = '';
     this.isLoading = true;
     this.cdr.detectChanges();
@@ -50,7 +42,7 @@ export class ChatComponent {
     this.chatService.sendMessage(msg, history).subscribe({
       next: reply => {
         this.zone.run(() => {
-          this.messages = [...this.messages, { role: 'assistant', content: reply }];
+          this.persistMessages([...this.messages, { role: 'assistant', content: reply }]);
           this.isLoading = false;
           this.cdr.detectChanges();
           this.scrollToBottom();
@@ -58,16 +50,21 @@ export class ChatComponent {
       },
       error: () => {
         this.zone.run(() => {
-          this.messages = [
+          this.persistMessages([
             ...this.messages,
             { role: 'assistant', content: 'Sorry, I encountered an error. Please try again later.' },
-          ];
+          ]);
           this.isLoading = false;
           this.cdr.detectChanges();
           this.scrollToBottom();
         });
       },
     });
+  }
+
+  private persistMessages(messages: ChatMessage[]): void {
+    this.messages = messages;
+    this.chatService.setMessages(messages);
   }
 
   private scrollToBottom(): void {

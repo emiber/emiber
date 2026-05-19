@@ -1,44 +1,29 @@
 <div class="chat-container">
   <div class="messages">
     @for (msg of messages; track msg) {
-      <div
-        class="message"
-        [class.user]="msg.role === 'user'"
-        [class.assistant]="msg.role === 'assistant'"
-      >
-        <div class="bubble">{{ msg.content }}</div>
-      </div>
+    <div class="message" [class.user]="msg.role === 'user'" [class.assistant]="msg.role === 'assistant'">
+      <div class="bubble">{{ msg.content }}</div>
+    </div>
     }
 
     @if (isLoading) {
-      <div class="message assistant">
-        <div class="bubble loading">
-          <span class="dot"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-        </div>
+    <div class="message assistant">
+      <div class="bubble loading">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
       </div>
+    </div>
     }
 
     <div #scrollAnchor></div>
   </div>
 
   <div class="input-area">
-    <input
-      class="input-field"
-      type="text"
-      [(ngModel)]="currentMessage"
-      (keydown.enter)="send()"
-      placeholder="Ask me anything..."
-      [disabled]="isLoading"
-      aria-label="Chat input"
-    />
-    <button
-      class="send-button"
-      (click)="send()"
-      [disabled]="isLoading || !currentMessage.trim()"
-      aria-label="Send message"
-    >
+    <input class="input-field" type="text" [(ngModel)]="currentMessage" (keydown.enter)="send()"
+      placeholder="Ask me anything..." [disabled]="isLoading" aria-label="Chat input" />
+    <button class="send-button" (click)="send()" [disabled]="isLoading || !currentMessage.trim()"
+      aria-label="Send message">
       <span class="material-icons" aria-hidden="true">send</span>
     </button>
   </div>

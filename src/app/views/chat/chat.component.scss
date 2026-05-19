@@ -2,6 +2,7 @@
 
 :host {
   display: block;
+  height: 100%;
 }
 
 .chat-container {
@@ -9,6 +10,7 @@
   flex-direction: column;
   max-width: 800px;
   margin: 0 auto;
+  height: 100%;
 }
 
 .messages {
@@ -16,6 +18,8 @@
   flex-direction: column;
   gap: 0.75rem;
   padding: 0 0 1rem;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .message {
@@ -69,20 +73,24 @@
   &:nth-child(1) {
     animation-delay: -0.32s;
   }
+
   &:nth-child(2) {
     animation-delay: -0.16s;
   }
+
   &:nth-child(3) {
     animation-delay: 0s;
   }
 }
 
 @keyframes bounce {
+
   0%,
   80%,
   100% {
     transform: scale(0);
   }
+
   40% {
     transform: scale(1);
   }
@@ -93,7 +101,7 @@
   bottom: 0;
   display: flex;
   gap: 0.5rem;
-  padding: 0.75rem 0;
+  padding: 0.75rem;
   background: rgba(#000, 0.85);
   backdrop-filter: blur(4px);
   border-top: 1px solid rgba($fontColor, 0.2);
