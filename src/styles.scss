@@ -8,9 +8,34 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    background-image: url('assets/images/bgImage.webp');
-    background-size: 100%;
+    background: #000;
 }
+
+/* ─── Animated site background (WebGL canvas) ──────────────────────────
+   Canvas rendered at half-res in bg-shader.js, upscaled to full viewport
+   via CSS. Sits at z-index:0; app-root at z-index:1 stays above it.
+   ──────────────────────────────────────────────────────────────────────── */
+
+#bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: #000;
+    image-rendering: auto;
+    opacity: 0.6;
+}
+
+app-root {
+    position: relative;
+    z-index: 1;
+    display: block;
+}
+
+
 
 * {
     margin: 0;
