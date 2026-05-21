@@ -30,7 +30,7 @@
   }
 
   init();
-  window.addEventListener('resize', init);
+  // window.addEventListener('resize', init);
 
   const FPS = 10; // lower fps = more "chunky" digital look
   let last = 0;
