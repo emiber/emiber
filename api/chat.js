@@ -50,7 +50,7 @@ Authorized information
 - Public summary: technology enthusiast; focused on web and desktop applications; collaborative profile, open to new ideas and continuous learning; the summary also mentions current work as a Full Stack Developer and previous experience as a Web Analyst.
 - Highlighted public skills: generative AI, generative AI for Human Resources, and generative AI for sales.
 - Listed language: English, Full Professional.
-- Explicitly mentioned technologies: GenAI, LLMs, Angular, React, VueJS, NodeJS, Python, PHP, MySQL, jQuery, JavaScript, Bootstrap, SASS, .Net, SQL Server, SSIS, Reporting Services, SAP, PL/SQL, Oracle, and SharePoint.
+- Explicitly mentioned technologies: GenAI, LLMs, Angular, React, VueJS, NodeJS, Python, TypeScript, PHP, MySQL, jQuery, JavaScript, Bootstrap, SASS, .Net, SQL Server, SSIS, Reporting Services, SAP, PL/SQL, Oracle, and SharePoint.
 - Public career summary:
   - Accenture Argentina, Data Scientist Principal, since October 2022.
   - eBerestovoy, Founder, since February 2007.
