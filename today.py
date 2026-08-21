@@ -313,12 +313,13 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
     """
     tree = etree.parse(filename)
     root = tree.getroot()
-    justify_format(root, 'age_data', age_data, 49)
-    justify_format(root, 'commit_data', commit_data, 22)
-    justify_format(root, 'star_data', star_data, 14)
-    justify_format(root, 'repo_data', repo_data, 6)
-    justify_format(root, 'contrib_data', contrib_data)
-    justify_format(root, 'follower_data', follower_data, 10)
+    justify_format(root, 'age_data', age_data, 54)  # = build_svgs.TARGET_WIDTH - 11, keeps Uptime aligned to the other rows
+    # Stats-grid cells: length = cell_width - len(label) - 3  (see build_svgs.stat_cell)
+    justify_format(root, 'repo_data', repo_data, 18)       # Repos       cell width 26
+    justify_format(root, 'commit_data', commit_data, 16)   # Commits     cell width 26
+    justify_format(root, 'contrib_data', contrib_data, 12) # Contributed cell width 26
+    justify_format(root, 'star_data', star_data, 26)       # Stars       cell width 34
+    justify_format(root, 'follower_data', follower_data, 22)  # Followers cell width 34
     justify_format(root, 'loc_data', loc_data[2], 9)
     justify_format(root, 'loc_add', loc_data[0])
     justify_format(root, 'loc_del', loc_data[1], 7)

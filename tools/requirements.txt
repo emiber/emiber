@@ -1,0 +1,7 @@
+# Local tooling to (re)build the profile card. NOT needed by GitHub Actions —
+# the workflow only runs today.py against the committed SVGs (cache/requirements.txt).
+#   python tools/build_svgs.py     # rebuild dark_mode.svg / light_mode.svg
+#   python tools/ascii_face.py     # regenerate the ASCII portrait from profile_nobg.png
+Pillow          # build_svgs.py, ascii_face.py (image decode / resize)
+rembg           # remove the background -> profile_nobg.png (u2net_human_seg model)
+onnxruntime     # rembg inference backend

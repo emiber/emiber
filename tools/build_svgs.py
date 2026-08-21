@@ -21,16 +21,30 @@ from PIL import Image, ImageOps
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
 
-USE_PHOTO = True
+USE_PHOTO = False
 PHOTO = os.path.join(REPO, "profile.jpg")
 
-RX = 540 if USE_PHOTO else 600   # right column x start
-ADV = 10.4        # px per char, conservative (covers Consolas+size-adjust and wider system mono)
+ADV = 10.4        # px per stats char, conservative (covers Consolas+size-adjust and wider system mono)
 MARGIN = 30
-HEIGHT = 540
-MAXEND = 64
-TARGET = 34
+HEIGHT = 550      # last stats row baseline is 530; leave a bottom margin
+DOT_MIN = 3       # minimum dots even on the widest info row
 EMDASH = "—"
+
+# The ASCII portrait is rendered denser than the stats text so a detailed face fits the height.
+ASCII_FONT = 13
+ASCII_LINE = 15
+ASCII_ADV = 8.2   # px per ASCII char (conservative for Consolas 13px + size-adjust)
+ASCII_X = 15
+ASCII_Y0 = 24
+GAP = 42          # gap between the portrait and the stats column
+
+if USE_PHOTO:
+    RX = 540      # right column x start (fixed for the 470px photo)
+    ASCII_ROWS = None
+else:
+    with open(os.path.join(HERE, "ascii_rows.txt"), encoding="utf-8") as f:
+        ASCII_ROWS = f.read().split("\n")
+    RX = int(ASCII_X + max(len(r) for r in ASCII_ROWS) * ASCII_ADV + GAP)
 
 # ---- left visual: embedded photo (rounded) or ASCII portrait ----
 def photo_bits():
@@ -54,15 +68,13 @@ def left_defs_and_visual(fill):
         img = ('<image x="25" y="35" width="470" height="470" preserveAspectRatio="xMidYMid slice"'
                f' clip-path="url(#pfp)" xlink:href="data:image/jpeg;base64,{b64}"/>')
         return defs + "\n" + img, 495
-    with open(os.path.join(HERE, "ascii_rows.txt"), encoding="utf-8") as f:
-        rows = f.read().split("\n")
-    out = [f'<text x="15" y="30" fill="{fill}" class="ascii">']
-    y = 30
-    for row in rows:
-        out.append(f'<tspan x="15" y="{y}">{escape(row)}</tspan>')
-        y += 20
+    out = [f'<text x="{ASCII_X}" y="{ASCII_Y0}" fill="{fill}" font-size="{ASCII_FONT}px" class="ascii">']
+    y = ASCII_Y0
+    for row in ASCII_ROWS:
+        out.append(f'<tspan x="{ASCII_X}" y="{y}">{escape(row)}</tspan>')
+        y += ASCII_LINE
     out.append("</text>")
-    return "\n".join(out), int(15 + max(len(r) for r in rows) * ADV)
+    return "\n".join(out), int(ASCII_X + max(len(r) for r in ASCII_ROWS) * ASCII_ADV)
 
 # ---- right column stats card ----
 def strip(s):
@@ -71,10 +83,37 @@ def strip(s):
 def label_markup(parts):
     return ".".join(f'<tspan class="key">{escape(p)}</tspan>' for p in parts)
 
+def prefix_len(parts):
+    """Visible chars before the dots: '. ' + label + ':'."""
+    return len(". ") + len(".".join(parts)) + len(":")
+
+# Single-value info rows: (y, label-parts, value, value_id-for-today.py, is_spacer)
+INFO = [
+    (50,  ("OS",),                      "Windows 11",                               None),
+    (70,  ("Uptime",),                  "—",                                        "age_data"),
+    (90,  ("Host",),                    "Accenture Argentina",                      None),
+    (110, ("Role",),                    "GenAI Solution Architect & Delivery Lead", None),
+    (130, ("IDE",),                     "VS Code",                                  None),
+    (170, ("Languages", "Programming"), "Python, TypeScript, JavaScript, SQL",      None),
+    (190, ("Languages", "Frameworks"),  "FastAPI, Node.js, Angular, React, Vue",    None),
+    (210, ("Languages", "Real"),        "Spanish (native), English (C1)",           None),
+    (250, ("Focus", "AI"),              "RAG, Text-to-SQL, Agents, MCP",            None),
+    (270, ("Focus", "Cloud"),           "Azure, AWS, SAP BTP",                      None),
+    (330, ("Email",),                   "emiber@gmail.com",                         None),
+    (350, ("Web",),                     "emiber.vercel.app",                        None),
+    (370, ("Location",),                "Buenos Aires, Argentina",                  None),
+    (390, ("LinkedIn",),                "emilianoberestovoy",                       None),
+    (410, ("GitHub",),                  "emiber",                                   None),
+]
+
+# Every info row is justified to this same right edge: widest row + a short dot run.
+# age_data's real value comes from today.py, which right-justifies it to the same
+# edge via its own `length` arg -> keep today.py's age_data length = TARGET_WIDTH - 11.
+TARGET_WIDTH = max(prefix_len(p) + len(v) for _, p, v, vid in INFO if vid != "age_data") + DOT_MIN + 2
+
 def content_line(y, parts, value, value_id=None):
-    llen = len(".".join(parts)); vlen = len(value)
-    vstart = min(TARGET, MAXEND - vlen)
-    n = max(1, vstart - (5 + llen))
+    # Fill the gap between label and value with dots so the value sits at TARGET_WIDTH.
+    n = max(DOT_MIN, TARGET_WIDTH - prefix_len(parts) - len(value) - len("  "))
     dots = " " + ("." * n) + " "
     dots_id = f' id="{value_id}_dots"' if value_id else ""
     val_id = f' id="{value_id}"' if value_id else ""
@@ -85,38 +124,38 @@ def content_line(y, parts, value, value_id=None):
 def spacer(y):
     return f'<tspan x="{RX}" y="{y}" class="cc">. </tspan>'
 
+# GitHub-stats grid: two aligned columns of "label: ...dots... value" cells.
+# today.py re-justifies each value inside its cell -> keep its length arg in sync:
+#   length = cell_width - len(label) - 3   (see the map in today.py.svg_overwrite)
+STAT_LEFT_W = 26   # chars in the left cell  (Repos / Commits / Contributed)
+STAT_RIGHT_W = 34  # chars in the right cell (Stars / Followers)
+
+def stat_cell(label, value_id, value, width):
+    n = max(DOT_MIN, width - len(label) - len(value) - 3)   # -3: colon + two dot-spaces
+    dots = " " + ("." * n) + " "
+    return (f'<tspan class="key">{escape(label)}</tspan>:'
+            f'<tspan class="cc" id="{value_id}_dots">{dots}</tspan>'
+            f'<tspan class="value" id="{value_id}">{escape(value)}</tspan>')
+
+def stat_row(y, left_cell, right_cell=None):
+    sep = ('<tspan class="cc"> | </tspan>' + right_cell) if right_cell else ""
+    return f'<tspan x="{RX}" y="{y}" class="cc">. </tspan>{left_cell}{sep}'
+
 # ------------------------------- CONTENT -------------------------------
 content = {}
 content[30]  = None
-content[50]  = content_line(50,  ("OS",),                      "Windows 11")
-content[70]  = content_line(70,  ("Uptime",),                  "—", value_id="age_data")
-content[90]  = content_line(90,  ("Host",),                    "Accenture Argentina")
-content[110] = content_line(110, ("Role",),                    "GenAI Solution Architect & Delivery Lead")
-content[130] = content_line(130, ("IDE",),                     "VS Code")
+for y, parts, value, value_id in INFO:
+    content[y] = content_line(y, parts, value, value_id=value_id)
 content[150] = spacer(150)
-content[170] = content_line(170, ("Languages", "Programming"), "Python, TypeScript, JavaScript, SQL")
-content[190] = content_line(190, ("Languages", "Frameworks"),  "FastAPI, Node.js, Angular, React, Vue")
-content[210] = content_line(210, ("Languages", "Real"),        "Spanish (native), English (C1)")
 content[230] = spacer(230)
-content[250] = content_line(250, ("Focus", "AI"),              "RAG, Text-to-SQL, Agents, MCP")
-content[270] = content_line(270, ("Focus", "Cloud"),           "Azure, AWS, SAP BTP")
 content[310] = None
-content[330] = content_line(330, ("Email",),                   "emiber@gmail.com")
-content[350] = content_line(350, ("Web",),                     "emiber.vercel.app")
-content[370] = content_line(370, ("Location",),                "Buenos Aires, Argentina")
-content[390] = content_line(390, ("LinkedIn",),                "emilianoberestovoy")
-content[410] = content_line(410, ("GitHub",),                  "emiber")
 content[450] = None
-content[470] = ('<tspan x="{RX}" y="470" class="cc">. </tspan><tspan class="key">Repos</tspan>:'
-                '<tspan class="cc" id="repo_data_dots"> .... </tspan><tspan class="value" id="repo_data">0</tspan>'
-                ' {{<tspan class="key">Contributed</tspan>: <tspan class="value" id="contrib_data">0</tspan>}}'
-                ' | <tspan class="key">Stars</tspan>:<tspan class="cc" id="star_data_dots"> ........... </tspan>'
-                '<tspan class="value" id="star_data">0</tspan>').format(RX=RX)
-content[490] = ('<tspan x="{RX}" y="490" class="cc">. </tspan><tspan class="key">Commits</tspan>:'
-                '<tspan class="cc" id="commit_data_dots"> ................. </tspan><tspan class="value" id="commit_data">0</tspan>'
-                ' | <tspan class="key">Followers</tspan>:<tspan class="cc" id="follower_data_dots"> ....... </tspan>'
-                '<tspan class="value" id="follower_data">0</tspan>').format(RX=RX)
-content[510] = ('<tspan x="{RX}" y="510" class="cc">. </tspan><tspan class="key">Lines of Code on GitHub</tspan>:'
+content[470] = stat_row(470, stat_cell("Repos",   "repo_data",   "0", STAT_LEFT_W),
+                             stat_cell("Stars",     "star_data",     "0", STAT_RIGHT_W))
+content[490] = stat_row(490, stat_cell("Commits", "commit_data", "0", STAT_LEFT_W),
+                             stat_cell("Followers", "follower_data", "0", STAT_RIGHT_W))
+content[510] = stat_row(510, stat_cell("Contributed", "contrib_data", "0", STAT_LEFT_W))
+content[530] = ('<tspan x="{RX}" y="530" class="cc">. </tspan><tspan class="key">Lines of Code on GitHub</tspan>:'
                 '<tspan class="cc" id="loc_data_dots">. </tspan><tspan class="value" id="loc_data">0</tspan>'
                 ' ( <tspan class="addColor" id="loc_add">0</tspan><tspan class="addColor">++</tspan>,'
                 ' <tspan id="loc_del_dots"> </tspan><tspan class="delColor" id="loc_del">0</tspan><tspan class="delColor">--</tspan> )').format(RX=RX)
@@ -175,4 +214,5 @@ for fname, t in THEMES.items():
         f.write(svg)
 
 print(f"wrote SVGs  width={WIDTH} height={HEIGHT}  USE_PHOTO={USE_PHOTO}  max_content={max_content}  RX={RX}")
+print(f"info rows justified to TARGET_WIDTH={TARGET_WIDTH}  (today.py age_data length must be {TARGET_WIDTH - 11})")
 print("Stats are 0 placeholders -> run: ACCESS_TOKEN=<pat> python today.py")
