@@ -1,6 +1,8 @@
 # Personal source assets — used to generate the ASCII art / card, not for the public repo
 profile_fondo_blanco.png
+profile.jpg
 Emiliano-Berestovoy-CV.pdf
 
 # Python
 __pycache__/
+tools/ascii_rows.txt
