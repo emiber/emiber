@@ -8,6 +8,14 @@ from lxml import etree
 import time
 import hashlib
 
+# Optionally load ACCESS_TOKEN from a local .env for convenience (pip install python-dotenv).
+# In GitHub Actions there is no .env, so this is a harmless no-op and the repo secret is used.
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # Fine-grained personal access token with All Repositories access:
 # Account permissions: read:Followers, read:Starring, read:Watching
 # Repository permissions: read:Commit statuses, read:Contents, read:Issues, read:Metadata, read:Pull Requests

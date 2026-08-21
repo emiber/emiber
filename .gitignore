@@ -1,4 +1,8 @@
 # Personal source assets — used to generate the ASCII art / card, not for the public repo
+# Secrets — never commit
+.env
+
+# Personal source assets
 profile_fondo_blanco.png
 profile.jpg
 Emiliano-Berestovoy-CV.pdf
